@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Dadabase.data;
+using Dadabase.Services;
 
 namespace Dadabase.Controllers;
 
 [ApiController]
 [Route("[controller]")]
 
-public class JokeController() : ControllerBase
+public class JokeController(IJokeService jokeService) : ControllerBase
 {
     [HttpGet]
     [EndpointName("GetJokeById")]
