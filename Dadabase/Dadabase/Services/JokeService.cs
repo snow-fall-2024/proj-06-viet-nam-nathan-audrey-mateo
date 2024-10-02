@@ -2,11 +2,18 @@
 
 namespace Dadabase.Services;
 
-public class JokeService : IJokeService
+public class JokeService(Dbf25TeamNamContext context) : IJokeService
 {
-    public Task<Joke> CreateJokeAsync(Joke joke)
+    public async Task<Joke> CreateJokeAsync(Joke joke)
     {
-        throw new NotImplementedException();
+        if(joke == null)
+            throw new ArgumentException("You cannot create a joke without any content.");
+        
+        context.Jokes.Add(joke);
+        await context.SaveChangesAsync();
+
+        return joke;
+
     }
 
     public Task<Joke> GetJokeByIdAsync(int id)
@@ -19,3 +26,15 @@ public class JokeService : IJokeService
         throw new NotImplementedException();
     }
 }
+
+
+//public async Task<Checkout> CreateCheckoutAsync(Checkout checkout)
+//{
+//    if (checkout == null || checkout.StoreCheckoutItems.Count <= 0)
+//        throw new ArgumentException("You cannot complete a checkout without any items.");
+
+//    context.StoreCheckouts.Add(checkout);
+//    await context.SaveChangesAsync();
+
+//    return checkout;
+//}
