@@ -12,14 +12,25 @@ public class JokeController(IJokeService jokeService) : ControllerBase
     [HttpGet]
     [EndpointName("GetJokeById")]
     [EndpointSummary("Retrieves a joke from the dadabase, based on the requested ID")]
-    public string GetJokeById()
+    public async Task<Joke> GetJokeById()
     {
         throw new NotImplementedException();
     }
+
+    [HttpGet]
+    [EndpointName("GetAllJokes")]
+    [EndpointSummary("Retrieves a list of all jokes in the dadabase")]
+    [Route("/all")]
+    public async Task<IEnumerable<Joke>> GetAllJokesAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+
     [HttpGet]
     [EndpointName("GetRandomJoke")]
     [EndpointSummary("Retrieves a random joke from the dadabase")]
-    public string GetRandomJoke()
+    public async Task<Joke> GetRandomJoke()
     {
         throw new NotImplementedException();
     }
