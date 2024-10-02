@@ -4,7 +4,7 @@ namespace Dadabase.Services;
 
 public class JokeService : IJokeService
 {
-    public Task<Joke> CreateJokeAsync()
+    public Task<Joke> CreateJokeAsync(Joke joke)
     {
         throw new NotImplementedException();
     }
