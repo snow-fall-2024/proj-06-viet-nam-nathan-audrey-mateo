@@ -1,18 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Dadabase.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Dadabase.Controllers;
 
 
 [ApiController]
 [Route("[controller]")]
-public class AudienceController
+public class AudienceController(IAudienceService audienceService)
 {
     [HttpGet]
     [EndpointName("GetAudienceList")]
     [EndpointSummary("Retrieves all of the audiences currently in the database")]
     public string GetAudienceList()
     {
-        throw new NotImplementedException();
+        var list = audienceService.;
     }
 
 
