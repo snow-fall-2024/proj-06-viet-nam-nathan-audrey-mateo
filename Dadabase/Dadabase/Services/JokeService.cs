@@ -1,4 +1,5 @@
 ﻿using Dadabase.data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dadabase.Services;
 
@@ -16,9 +17,9 @@ public class JokeService(Dbf25TeamNamContext context) : IJokeService
 
     }
 
-    public async Task<IEnumerable<Joke>> GetAllJokes()
+    public async Task<ICollection<Joke>> GetAllJokes()
     {
-        return context.Jokes;
+        return await context.Jokes.ToListAsync();
     }
 
     public Task<Joke> GetJokeByIdAsync(int id)
