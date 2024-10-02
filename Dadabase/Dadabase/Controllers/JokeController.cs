@@ -7,8 +7,6 @@ namespace Dadabase.Controllers;
 
 public class JokeController() : ControllerBase
 {
-
-
     [HttpGet]
     [EndpointName("GetJokeById")]
     [EndpointSummary("Retrieves a joke from the dadabase, based on the requested ID")]
@@ -20,6 +18,15 @@ public class JokeController() : ControllerBase
     [EndpointName("GetRandomJoke")]
     [EndpointSummary("Retrieves a random joke from the dadabase")]
     public string GetRandomJoke()
+    {
+        throw new NotImplementedException();
+    }
+
+
+    [HttpPost]
+    [EndpointName("AddJoke")]
+    [EndpointSummary("Adds a joke to the dadabase")]
+    public string AddJoke()
     {
         throw new NotImplementedException();
     }
