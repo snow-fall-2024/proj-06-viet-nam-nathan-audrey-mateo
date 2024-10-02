@@ -1,0 +1,6 @@
+@Dadabase_HostAddress = http://localhost:5070
+
+GET {{Dadabase_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
