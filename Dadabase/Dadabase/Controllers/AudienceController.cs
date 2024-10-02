@@ -6,7 +6,7 @@ namespace Dadabase.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AudienceController(IAudienceService audienceService)
+public class AudienceController(ITService audienceService)
 {
     [HttpGet]
     [EndpointName("GetAudienceList")]

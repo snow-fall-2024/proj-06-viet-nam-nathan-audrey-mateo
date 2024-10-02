@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dadabase.Services
 {
-    public class AudienceService(Dbf25TeamNamContext context) : IAudienceService
+    public class AudienceService(Dbf25TeamNamContext context) : ITService<Audience>
     {
         public async Task DeleteAudience(int id)
         {
