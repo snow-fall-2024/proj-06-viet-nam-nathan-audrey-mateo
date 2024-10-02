@@ -9,12 +9,13 @@ namespace Dadabase.Controllers;
 
 public class JokeController(IJokeService jokeService) : ControllerBase
 {
-    [HttpGet]
+    [HttpGet("{id}")]
     [EndpointName("GetJokeById")]
     [EndpointSummary("Retrieves a joke from the dadabase, based on the requested ID")]
-    public async Task<Joke> GetJokeById()
+    public async Task<Joke> GetJokeById(int id)
     {
-        throw new NotImplementedException();
+        var result = await jokeService.GetJokeByIdAsync(id);
+        return result;
     }
 
     [HttpGet]

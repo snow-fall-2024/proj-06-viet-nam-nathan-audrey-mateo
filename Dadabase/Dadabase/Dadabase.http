@@ -4,3 +4,7 @@ GET {{Dadabase_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{Dadabase_HostAddress}}/joke/2
+
+###
