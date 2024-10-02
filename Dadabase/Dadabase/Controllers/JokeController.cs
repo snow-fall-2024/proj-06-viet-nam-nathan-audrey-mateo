@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Dadabase.data;
 
 namespace Dadabase.Controllers;
 
@@ -7,8 +8,6 @@ namespace Dadabase.Controllers;
 
 public class JokeController() : ControllerBase
 {
-
-
     [HttpGet]
     [EndpointName("GetJokeById")]
     [EndpointSummary("Retrieves a joke from the dadabase, based on the requested ID")]
@@ -23,6 +22,23 @@ public class JokeController() : ControllerBase
     {
         throw new NotImplementedException();
     }
+
+
+    [HttpPost]
+    [EndpointName("AddJoke")]
+    [EndpointSummary("Adds a joke to the dadabase")]
+    public async Task<IActionResult> AddJoke([FromBody] JokeDto jokeDto)
+    {
+        var joke = new Joke
+        {
+            Jokename = jokeDto.JokeName,
+            Joketext = jokeDto.JokeText
+        };
+
+        var result = await jokeService.CreateJokeAsync(joke);
+        return Ok(result);
+    }
+
 }
 
 public class JokeDto
