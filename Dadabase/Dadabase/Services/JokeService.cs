@@ -14,7 +14,6 @@ public class JokeService(Dbf25TeamNamContext context) : IJokeService
         await context.SaveChangesAsync();
 
         return joke;
-
     }
 
     public async Task<ICollection<Joke>> GetAllJokes()
@@ -22,9 +21,15 @@ public class JokeService(Dbf25TeamNamContext context) : IJokeService
         return await context.Jokes.ToListAsync();
     }
 
-    public Task<Joke> GetJokeByIdAsync(int id)
+    public async Task<Joke> GetJokeByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await context.Jokes
+            .Where(j => j.Id == id)
+            .Select(j => new Joke
+            {
+                Jokename = j.Jokename,
+                Joketext = j.Joketext
+            }).FirstOrDefaultAsync();
     }
 
     public Task<Joke> GetRandomJokeAsync()
@@ -32,15 +37,3 @@ public class JokeService(Dbf25TeamNamContext context) : IJokeService
         throw new NotImplementedException();
     }
 }
-
-
-//public async Task<Checkout> CreateCheckoutAsync(Checkout checkout)
-//{
-//    if (checkout == null || checkout.StoreCheckoutItems.Count <= 0)
-//        throw new ArgumentException("You cannot complete a checkout without any items.");
-
-//    context.StoreCheckouts.Add(checkout);
-//    await context.SaveChangesAsync();
-
-//    return checkout;
-//}

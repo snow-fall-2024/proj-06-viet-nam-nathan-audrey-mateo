@@ -1,4 +1,5 @@
 using Dadabase.data;
+using Dadabase.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<Dbf25TeamNamContext>(o => o.UseNpgsql(builder.Configuration["DB_CONN"]));
+
+builder.Services.AddScoped<IJokeService, JokeService>();
 
 var app = builder.Build();
 
