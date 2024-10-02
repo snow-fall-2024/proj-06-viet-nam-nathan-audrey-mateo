@@ -24,13 +24,7 @@ public class JokeService(Dbf25TeamNamContext context) : IJokeService
     public async Task<Joke> GetJokeByIdAsync(int id)
     {
         return await context.Jokes
-            .Where(j => j.Id == id)
-            .Select(j => new Joke
-            {
-                Id = id,
-                Jokename = j.Jokename,
-                Joketext = j.Joketext
-            }).FirstOrDefaultAsync();
+            .Where(j => j.Id == id).FirstOrDefaultAsync();
     }
 
     public Task<Joke> GetRandomJokeAsync()
