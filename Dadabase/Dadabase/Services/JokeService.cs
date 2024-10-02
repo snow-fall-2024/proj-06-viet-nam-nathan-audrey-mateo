@@ -27,6 +27,7 @@ public class JokeService(Dbf25TeamNamContext context) : IJokeService
             .Where(j => j.Id == id)
             .Select(j => new Joke
             {
+                Id = id,
                 Jokename = j.Jokename,
                 Joketext = j.Joketext
             }).FirstOrDefaultAsync();
