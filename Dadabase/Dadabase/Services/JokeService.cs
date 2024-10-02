@@ -16,6 +16,11 @@ public class JokeService(Dbf25TeamNamContext context) : IJokeService
 
     }
 
+    public async Task<IEnumerable<Joke>> GetAllJokes()
+    {
+        return context.Jokes;
+    }
+
     public Task<Joke> GetJokeByIdAsync(int id)
     {
         throw new NotImplementedException();

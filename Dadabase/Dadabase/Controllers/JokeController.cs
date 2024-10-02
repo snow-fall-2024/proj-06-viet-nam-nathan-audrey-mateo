@@ -23,7 +23,8 @@ public class JokeController(IJokeService jokeService) : ControllerBase
     [Route("/all")]
     public async Task<IEnumerable<Joke>> GetAllJokesAsync()
     {
-        throw new NotImplementedException();
+        var result = await jokeService.GetAllJokes();
+        return result;
     }
 
 

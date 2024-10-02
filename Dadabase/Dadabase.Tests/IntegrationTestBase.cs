@@ -1,4 +1,5 @@
 ﻿using Dadabase.data;
+using Dadabase.Tests;
 using FluentAssertions;
 using Microsoft.AspNetCore.Components.Server.Circuits;
 using Microsoft.AspNetCore.Hosting;
@@ -12,12 +13,12 @@ using System.Net.Http.Json;
 using Testcontainers.PostgreSql;
 using Xunit.Abstractions;
 
-public class IntegrationTestBase : IClassFixture<WebApplicationFactory<Program>>, IAsyncLifetime
+public class IntegrationTestBase : DadaBaseTest,IClassFixture<WebApplicationFactory<Program>>, IAsyncLifetime
 {
     private readonly WebApplicationFactory<Program> customWebAppFactory;
     private PostgreSqlContainer _dbContainer;
 
-    public IntegrationTestBase(WebApplicationFactory<Program> webAppFactory, ITestOutputHelper outputHelper) : base(webAppFactory, outputHelper)
+    public IntegrationTestBase(WebApplicationFactory<Program> webAppFactory, ITestOutputHelper outputHelper) :  base (webAppFactory, outputHelper)
     {
         customWebAppFactory = webAppFactory.WithWebHostBuilder(builder =>
         {
@@ -49,8 +50,8 @@ public class IntegrationTestBase : IClassFixture<WebApplicationFactory<Program>>
     public async Task GetData()
     {
         var client = customWebAppFactory.CreateClient();
-        var circuits = await client.GetFromJsonAsync<IEnumerable<Circuit>>("/circuit");
-        circuits.Count().Should().Be(1);
+        var response = await client.GetAsync("/all");
+        response.Content.ToString().Length.Should().Be(4);
     }
 
     public Task DisposeAsync()
