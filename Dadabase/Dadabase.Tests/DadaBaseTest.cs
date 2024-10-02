@@ -15,7 +15,8 @@ namespace Dadabase.Tests
     public class DadaBaseTest : IClassFixture<WebApplicationFactory<Program>>, IAsyncLifetime
     {
         private readonly WebApplicationFactory<Program> customWebAppFactory;
-        private PostgreSqlContainer  _dbContainer;
+        private readonly PostgreSqlContainer  _dbContainer;
+        private readonly ITestOutputHelper outputHelper;
 
         public DadaBaseTest(WebApplicationFactory<Program> webAppFactory, ITestOutputHelper outputHelper)
         {
@@ -30,10 +31,6 @@ namespace Dadabase.Tests
                         options.UseNpgsql(_dbContainer.GetConnectionString()));
                 });
 
-                _dbContainer = new PostgreSqlBuilder()
-                .WithImage("postgres")
-                .WithPassword("Strong_password_123!")
-                .Build();
 
                 builder.ConfigureLogging(logging =>
                 {
@@ -43,6 +40,11 @@ namespace Dadabase.Tests
                     logging.SetMinimumLevel(LogLevel.Information);
                 });
             });
+
+            _dbContainer = new PostgreSqlBuilder()
+                .WithImage("postgres")
+                .WithPassword("Strong_password_123!")
+                .Build();
         }
 
         public async Task DisposeAsync()
@@ -264,9 +266,11 @@ namespace Dadabase.Tests
         }
 
         [Fact]
-        public void Test1()
+        public async Task GetData()
         {
-
+            var client = customWebAppFactory.CreateClient();
+            var response = await client.GetAsync("/all");
+            Assert.Fail($"response is type: {response.GetType()}");
         }
     }
 }
