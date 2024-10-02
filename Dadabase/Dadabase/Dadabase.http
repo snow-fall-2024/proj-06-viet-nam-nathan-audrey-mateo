@@ -8,3 +8,7 @@ Accept: application/json
 GET {{Dadabase_HostAddress}}/joke/2
 
 ###
+
+GET {{Dadabase_HostAddress}}/joke/all
+
+###

@@ -1,4 +1,5 @@
 using Dadabase.data;
+using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using System.Net.Http.Json;
 using System.Xml.Linq;
 using Testcontainers.PostgreSql;
 using Xunit.Abstractions;
@@ -15,7 +17,8 @@ namespace Dadabase.Tests
     public class DadaBaseTest : IClassFixture<WebApplicationFactory<Program>>, IAsyncLifetime
     {
         private readonly WebApplicationFactory<Program> customWebAppFactory;
-        private PostgreSqlContainer  _dbContainer;
+        private readonly PostgreSqlContainer _dbContainer;
+        private readonly ITestOutputHelper outputHelper;
 
         public DadaBaseTest(WebApplicationFactory<Program> webAppFactory, ITestOutputHelper outputHelper)
         {
@@ -26,14 +29,10 @@ namespace Dadabase.Tests
                     services.RemoveAll<Dbf25TeamNamContext>();
                     services.RemoveAll<DbContextOptions>();
                     services.RemoveAll(typeof(DbContextOptions<Dbf25TeamNamContext>));
-                    services.AddDbContext<Dbf25TeamNamContext>(options => 
+                    services.AddDbContext<Dbf25TeamNamContext>(options =>
                         options.UseNpgsql(_dbContainer.GetConnectionString()));
                 });
 
-                _dbContainer = new PostgreSqlBuilder()
-                .WithImage("postgres")
-                .WithPassword("Strong_password_123!")
-                .Build();
 
                 builder.ConfigureLogging(logging =>
                 {
@@ -43,6 +42,11 @@ namespace Dadabase.Tests
                     logging.SetMinimumLevel(LogLevel.Information);
                 });
             });
+
+            _dbContainer = new PostgreSqlBuilder()
+                .WithImage("postgres")
+                .WithPassword("Strong_password_123!")
+                .Build();
         }
 
         public async Task DisposeAsync()
@@ -264,9 +268,20 @@ namespace Dadabase.Tests
         }
 
         [Fact]
-        public void Test1()
+        public async Task GetAllJokesTest()
         {
+            var client = customWebAppFactory.CreateClient();
+            var response = await client.GetFromJsonAsync<ICollection<Joke>>("/all");
+            response.Count.Should().Be(4);
+        }
 
+        [Fact]
+        public async Task GetJokeByIdTest()
+        {
+            var client = customWebAppFactory.CreateClient();
+            var response = await client.GetFromJsonAsync<Joke>("/joke/2");
+            response.Jokename.Should().Be("WhyDidTheMathBookCry");
+            response.Id.Should().Be(2);
         }
     }
 }
