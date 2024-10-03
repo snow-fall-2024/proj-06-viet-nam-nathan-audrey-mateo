@@ -32,9 +32,11 @@ public class JokeController(IJokeService jokeService) : ControllerBase
     [HttpGet]
     [EndpointName("GetRandomJoke")]
     [EndpointSummary("Retrieves a random joke from the dadabase")]
+    [Route("/random")]
     public async Task<Joke> GetRandomJoke()
     {
-        throw new NotImplementedException();
+        var result = await jokeService.GetRandomJokeAsync();
+        return result;
     }
 
 

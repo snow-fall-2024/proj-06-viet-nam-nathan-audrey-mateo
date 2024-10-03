@@ -1,26 +1,27 @@
 ﻿using Dadabase.Services;
 using Microsoft.AspNetCore.Mvc;
+using Dadabase.data;
 
 namespace Dadabase.Controllers;
 
 
 [ApiController]
 [Route("[controller]")]
-public class AudienceController(ITService audienceService)
+public class AudienceController(AudienceService audienceService)
 {
     [HttpGet]
     [EndpointName("GetAudienceList")]
     [EndpointSummary("Retrieves all of the audiences currently in the database")]
-    public string GetAudienceList()
+    public async Task<ICollection<Audience>> GetAudienceList()
     {
-        var list = audienceService.;
+        throw new NotImplementedException();
     }
 
 
     [HttpPost]
     [EndpointName("AddAudience")]
     [EndpointSummary("Adds an audience to the dadabase")]
-    public string AddAudience()
+    public async Task<IActionResult> AddAudience()
     {
         throw new NotImplementedException();
     }

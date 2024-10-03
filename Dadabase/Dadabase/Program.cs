@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<Dbf25TeamNamContext>(o => o.UseNpgsql(builder.Configuration["DB_CONN"]));
 
 builder.Services.AddScoped<IJokeService, JokeService>();
-builder.Services.AddScoped<ITService<Audience>, AudienceService>();
+builder.Services.AddScoped<IAudienceService, AudienceService>();
 
 var app = builder.Build();
 

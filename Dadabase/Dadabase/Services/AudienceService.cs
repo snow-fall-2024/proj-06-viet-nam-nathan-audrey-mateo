@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dadabase.Services
 {
-    public class AudienceService(Dbf25TeamNamContext context) : ITService<Audience>
+    public class AudienceService(Dbf25TeamNamContext context) :IAudienceService
     {
-        public async Task DeleteAudience(int id)
+        public async Task DeleteAudienceByIdAsync(int id)
         {
                var audience = context.Audiences.Where(audience => audience.Id == id).FirstOrDefault();
             if (audience != null)
@@ -13,12 +13,12 @@ namespace Dadabase.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Audience>> GetAllAudiences()
+        public async Task<ICollection<Audience>> GetAllAudiencesAsync()
         {
             return await context.Audiences.ToListAsync();
         }
 
-        public async Task<Audience> GetAudience(int id)
+        public async Task<Audience> GetAudienceByIdAsync(int id)
         {
             var audience = context.Audiences.Where(aud => aud.Id == id).FirstOrDefault();
             if (audience != null)
@@ -26,7 +26,7 @@ namespace Dadabase.Services
             throw new InvalidOperationException();
         }
 
-        public async Task PostAudience(Audience audience)
+        public async Task AddAudienceAsync(Audience audience)
         {
             context.Audiences.Add(audience);
             await context.SaveChangesAsync();

@@ -29,6 +29,8 @@ public class JokeService(Dbf25TeamNamContext context) : IJokeService
 
     public Task<Joke> GetRandomJokeAsync()
     {
-        throw new NotImplementedException();
+        Random random = new Random();
+        int randomId = random.Next(1, context.Jokes.Count());
+        return GetJokeByIdAsync(randomId);
     }
 }
