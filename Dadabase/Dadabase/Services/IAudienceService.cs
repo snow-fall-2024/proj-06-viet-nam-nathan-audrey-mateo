@@ -6,9 +6,9 @@ public interface IAudienceService
 {
     
     public Task<Audience> GetAudienceByIdAsync(int id);
-    public Task AddAudienceAsync(Audience audience);
+    public Task<Audience> AddAudienceAsync(Audience audience);
 
-    public Task DeleteAudienceByIdAsync(int id);
+    public Task<IResult> DeleteAudienceByIdAsync(int id);
     public Task<ICollection<Audience>> GetAllAudiencesAsync();
     
 }
