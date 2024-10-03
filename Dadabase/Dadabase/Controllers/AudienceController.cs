@@ -7,20 +7,22 @@ namespace Dadabase.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AudienceController(AudienceService audienceService)
+public class AudienceController(IAudienceService audienceService)
 {
     [HttpGet]
     [EndpointName("GetAudienceList")]
     [EndpointSummary("Retrieves all of the audiences currently in the database")]
-    public async Task<ICollection<Audience>> GetAudienceList()
+    [Route("/audience/all")]
+    public async Task<IEnumerable<Audience>> GetAudienceList()
     {
-        throw new NotImplementedException();
+        return await audienceService.GetAllAudiencesAsync();
     }
 
 
     [HttpPost]
     [EndpointName("AddAudience")]
     [EndpointSummary("Adds an audience to the dadabase")]
+    [Route("/audience/add")]
     public async Task<IActionResult> AddAudience()
     {
         throw new NotImplementedException();

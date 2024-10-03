@@ -6,7 +6,6 @@ namespace Dadabase.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-
 public class JokeController(IJokeService jokeService) : ControllerBase
 {
     [HttpGet("{id}")]
