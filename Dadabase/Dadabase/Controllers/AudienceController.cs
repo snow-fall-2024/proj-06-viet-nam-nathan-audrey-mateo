@@ -32,7 +32,7 @@ public class AudienceController(IAudienceService audienceService) : ControllerBa
         };
 
         var result = await audienceService.AddAudienceAsync(audience);
-        return Created();
+        return Ok();
     }
 
 }

@@ -14,3 +14,27 @@ GET {{Dadabase_HostAddress}}/joke/random
 
 
 ###
+
+POST {{Dadabase_HostAddress}}/joke
+Content-Type: application/json
+
+{
+  "jokename": "Joke 1",
+  "joketext": "Joke 1 text"
+}
+
+###
+
+GET {{Dadabase_HostAddress}}/audience/all
+
+###
+
+POST {{Dadabase_HostAddress}}/audience/add
+Content-Type: application/json
+
+{
+  "audiencename": "Audience 1",
+  "description": "Audience 1 description"
+}
+
+###
