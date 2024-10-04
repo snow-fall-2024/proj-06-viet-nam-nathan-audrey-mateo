@@ -20,7 +20,7 @@ public class JokeController(IJokeService jokeService) : ControllerBase
     [HttpGet]
     [EndpointName("GetAllJokes")]
     [EndpointSummary("Retrieves a list of all jokes in the dadabase")]
-    [Route("/all")]
+    [Route("all")]
     public async Task<IEnumerable<Joke>> GetAllJokesAsync()
     {
         var result = await jokeService.GetAllJokes();
@@ -31,7 +31,7 @@ public class JokeController(IJokeService jokeService) : ControllerBase
     [HttpGet]
     [EndpointName("GetRandomJoke")]
     [EndpointSummary("Retrieves a random joke from the dadabase")]
-    [Route("/random")]
+    [Route("random")]
     public async Task<Joke> GetRandomJoke()
     {
         var result = await jokeService.GetRandomJokeAsync();
