@@ -1,4 +1,4 @@
-@Dadabase_HostAddress = http://localhost:5070
+@Dadabase_HostAddress = https://localhost:7082
 
 ###
 
@@ -15,7 +15,7 @@ GET {{Dadabase_HostAddress}}/joke/random
 
 ###
 
-POST {{Dadabase_HostAddress}}/joke
+POST {{Dadabase_HostAddress}}/joke/add
 Content-Type: application/json
 
 {

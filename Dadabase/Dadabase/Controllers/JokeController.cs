@@ -42,6 +42,7 @@ public class JokeController(IJokeService jokeService) : ControllerBase
     [HttpPost]
     [EndpointName("AddJoke")]
     [EndpointSummary("Adds a joke to the dadabase")]
+    [Route("add")]
     public async Task<IActionResult> AddJoke([FromBody] JokeDto jokeDto)
     {
         var joke = new Joke
@@ -51,7 +52,7 @@ public class JokeController(IJokeService jokeService) : ControllerBase
         };
 
         var result = await jokeService.CreateJokeAsync(joke);
-        return Ok(result);
+        return Ok();
     }
 
 }

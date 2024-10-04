@@ -31,9 +31,6 @@ public partial class Dbf25TeamNamContext : DbContext
 
     public virtual DbSet<Jokereactioncategory> Jokereactioncategories { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql("Name=DB_CONN");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Audience>(entity =>

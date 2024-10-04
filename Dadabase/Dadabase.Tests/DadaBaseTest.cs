@@ -1,12 +1,14 @@
 using Dadabase.data;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using System.Net;
 using System.Net.Http.Json;
 using System.Xml.Linq;
 using Testcontainers.PostgreSql;
@@ -22,6 +24,10 @@ namespace Dadabase.Tests
 
         public DadaBaseTest(WebApplicationFactory<Program> webAppFactory, ITestOutputHelper outputHelper)
         {
+            _dbContainer = new PostgreSqlBuilder()
+                .WithImage("postgres")
+                .WithPassword("Strong_password_123!")
+                .Build();
             customWebAppFactory = webAppFactory.WithWebHostBuilder(builder =>
             {
                 builder.ConfigureTestServices(services =>
@@ -33,7 +39,6 @@ namespace Dadabase.Tests
                         options.UseNpgsql(_dbContainer.GetConnectionString()));
                 });
 
-
                 builder.ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
@@ -43,10 +48,6 @@ namespace Dadabase.Tests
                 });
             });
 
-            _dbContainer = new PostgreSqlBuilder()
-                .WithImage("postgres")
-                .WithPassword("Strong_password_123!")
-                .Build();
         }
 
         public async Task DisposeAsync()
@@ -59,9 +60,8 @@ namespace Dadabase.Tests
             await _dbContainer.StartAsync();
 
             var yourInitScriptContents = """"
-                -- DROP SCHEMA dadabase;
-
-                CREATE SCHEMA dadabase AUTHORIZATION dbf25_team_nam;
+                
+                CREATE SCHEMA dadabase;
 
                 -- DROP SEQUENCE dadabase.audience_id_seq;
 
@@ -264,6 +264,7 @@ namespace Dadabase.Tests
                 	CONSTRAINT deliveredjokeid_jokereactionid_fkey FOREIGN KEY (jokereactionid) REFERENCES dadabase.jokereactioncategory(id)
                 );
                 """";
+
             await _dbContainer.ExecScriptAsync(yourInitScriptContents);
         }
 
@@ -271,17 +272,29 @@ namespace Dadabase.Tests
         public async Task GetAllJokesTest()
         {
             var client = customWebAppFactory.CreateClient();
-            var response = await client.GetFromJsonAsync<ICollection<Joke>>("/all");
-            response.Count.Should().Be(4);
+            var response = await client.GetFromJsonAsync<ICollection<Joke>>("/joke/all");
+            response.Count.Should().Be(0);
+        }
+
+        [Fact]
+        public async Task AddJokeTest()
+        {
+            var client = customWebAppFactory.CreateClient();
+            Joke joke = new() { Jokename = "name", Joketext = "text" };
+            client.PostAsJsonAsync("/joke/add", joke).Result.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
         [Fact]
         public async Task GetJokeByIdTest()
         {
             var client = customWebAppFactory.CreateClient();
-            var response = await client.GetFromJsonAsync<Joke>("/joke/2");
+            
+            //Create a Joke to Test the return
+            Joke joke = new() { Jokename = "WhyDidTheMathBookCry", Joketext = "Why did the math book cry? Because it had too many problems." };
+            
+            var response = await client.GetFromJsonAsync<Joke>("/joke/1");
             response.Jokename.Should().Be("WhyDidTheMathBookCry");
-            response.Id.Should().Be(2);
+            response.Id.Should().Be(1);
         }
     }
 }
