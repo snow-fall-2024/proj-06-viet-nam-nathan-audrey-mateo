@@ -1,8 +1,5 @@
 @Dadabase_HostAddress = https://localhost:7082
 
-GET {{Dadabase_HostAddress}}/weatherforecast/
-Accept: application/json
-
 ###
 
 GET {{Dadabase_HostAddress}}/joke/2

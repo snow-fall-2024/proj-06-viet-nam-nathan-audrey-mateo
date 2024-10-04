@@ -7,7 +7,7 @@ namespace Dadabase.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AudienceController(IAudienceService audienceService)
+public class AudienceController(IAudienceService audienceService) : ControllerBase
 {
     [HttpGet]
     [EndpointName("GetAudienceList")]
@@ -23,10 +23,18 @@ public class AudienceController(IAudienceService audienceService)
     [EndpointName("AddAudience")]
     [EndpointSummary("Adds an audience to the dadabase")]
     [Route("/audience/add")]
-    public async Task<IActionResult> AddAudience()
+    public async Task<IActionResult> AddAudience([FromBody] AudienceDto audienceDto)
     {
-        throw new NotImplementedException();
+        var audience = new Audience
+        {
+            Audiencename = audienceDto.AudienceName,
+            Description = audienceDto.Description
+        };
+
+        var result = await audienceService.AddAudienceAsync(audience);
+        return Created();
     }
+
 }
 
 public class AudienceDto
