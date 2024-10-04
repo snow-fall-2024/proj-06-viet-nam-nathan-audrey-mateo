@@ -12,7 +12,7 @@ public class AudienceController(IAudienceService audienceService) : ControllerBa
     [HttpGet]
     [EndpointName("GetAudienceList")]
     [EndpointSummary("Retrieves all of the audiences currently in the database")]
-    [Route("/audience/all")]
+    [Route("all")]
     public async Task<IEnumerable<Audience>> GetAudienceList()
     {
         return await audienceService.GetAllAudiencesAsync();
@@ -22,7 +22,7 @@ public class AudienceController(IAudienceService audienceService) : ControllerBa
     [HttpPost]
     [EndpointName("AddAudience")]
     [EndpointSummary("Adds an audience to the dadabase")]
-    [Route("/audience/add")]
+    [Route("add")]
     public async Task<IActionResult> AddAudience([FromBody] AudienceDto audienceDto)
     {
         var audience = new Audience
