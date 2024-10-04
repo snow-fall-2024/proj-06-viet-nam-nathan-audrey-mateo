@@ -269,14 +269,6 @@ namespace Dadabase.Tests
         }
 
         [Fact]
-        public async Task GetAllJokesTest()
-        {
-            var client = customWebAppFactory.CreateClient();
-            var response = await client.GetFromJsonAsync<ICollection<Joke>>("/joke/all");
-            response.Count.Should().Be(0);
-        }
-
-        [Fact]
         public async Task AddJokeTest()
         {
             var client = customWebAppFactory.CreateClient();
@@ -285,12 +277,26 @@ namespace Dadabase.Tests
         }
 
         [Fact]
+        public async Task GetAllJokesTest()
+        {
+            var client = customWebAppFactory.CreateClient();
+
+            //Create a Joke to Test get by id
+            Joke joke = new() { Jokename = "WhyDidTheMathBookCry", Joketext = "Why did the math book cry? Because it had too many problems." };
+            await client.PostAsJsonAsync("/joke/add", joke);
+        
+            var response = await client.GetFromJsonAsync<ICollection<Joke>>("/joke/all");
+            response.Count.Should().Be(1);
+        }
+
+        [Fact]
         public async Task GetJokeByIdTest()
         {
             var client = customWebAppFactory.CreateClient();
             
-            //Create a Joke to Test the return
+            //Create a Joke to Test get by id
             Joke joke = new() { Jokename = "WhyDidTheMathBookCry", Joketext = "Why did the math book cry? Because it had too many problems." };
+            await client.PostAsJsonAsync("/joke/add", joke);
             
             var response = await client.GetFromJsonAsync<Joke>("/joke/1");
             response.Jokename.Should().Be("WhyDidTheMathBookCry");
