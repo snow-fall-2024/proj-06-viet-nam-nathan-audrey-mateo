@@ -296,5 +296,14 @@ namespace Dadabase.Tests
             response.Jokename.Should().Be("WhyDidTheMathBookCry");
             response.Id.Should().Be(1);
         }
+        //[Fact]
+        //public async Task 
+        //[Fact]
+        //public async Task GetAllAudience()
+        //{
+        //    var client = customWebAppFactory.CreateClient();
+        //    var
+        //    var response =
+        }
     }
 }
