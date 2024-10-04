@@ -27,10 +27,10 @@ public class JokeService(Dbf25TeamNamContext context) : IJokeService
             .Where(j => j.Id == id).FirstOrDefaultAsync();
     }
 
-    public Task<Joke> GetRandomJokeAsync()
+    public async Task<Joke> GetRandomJokeAsync()
     {
         Random random = new Random();
-        int randomId = random.Next(1, 1 + context.Jokes.ToList().Count());
-        return GetJokeByIdAsync(randomId);
+        int randomId = random.Next(context.Jokes.ToList().Min(j => j.Id), context.Jokes.ToList().Max(j => j.Id));
+        return await GetJokeByIdAsync(randomId);
     }
 }

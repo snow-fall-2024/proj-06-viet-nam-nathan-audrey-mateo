@@ -10,7 +10,7 @@ GET {{Dadabase_HostAddress}}/joke/all
 
 ###
 
-GET {{Dadabase_HostAddress}}/random
+GET {{Dadabase_HostAddress}}/joke/random
 
 
 ###
