@@ -1,6 +1,11 @@
-@Dadabase_HostAddress = https://localhost:7082
+@Dadabase_HostAddress = http://localhost:5070
 
 ###
+
+POST {{Dadabase_HostAddress}}/admin/reset
+
+###
+
 
 GET {{Dadabase_HostAddress}}/joke/2
 

@@ -15,6 +15,7 @@ builder.Services.AddDbContext<Dbf25TeamNamContext>(o => o.UseNpgsql(builder.Conf
 
 builder.Services.AddScoped<IJokeService, JokeService>();
 builder.Services.AddScoped<IAudienceService, AudienceService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 var app = builder.Build();
 
