@@ -290,6 +290,19 @@ public class DadaBaseTest : IClassFixture<WebApplicationFactory<Program>>, IAsyn
     }
 
     [Fact]
+    public async Task GetRandomJokeTest()
+    {
+        var client = customWebAppFactory.CreateClient();
+
+        //Create a Joke to Test get by id
+        Joke joke = new() { Jokename = "WhyDidTheMathBookCry", Joketext = "Why did the math book cry? Because it had too many problems." };
+        await client.PostAsJsonAsync("/joke/add", joke);
+
+        var response = await client.GetFromJsonAsync<Joke>("/joke/random");
+        response.Jokename.Should().Be("WhyDidTheMathBookCry");
+    }
+
+    [Fact]
     public async Task GetJokeByIdTest()
     {
         var client = customWebAppFactory.CreateClient();
