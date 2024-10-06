@@ -284,7 +284,7 @@ public class DadaBaseTest : IClassFixture<WebApplicationFactory<Program>>, IAsyn
         //Create a Joke to Test get by id
         Joke joke = new() { Jokename = "WhyDidTheMathBookCry", Joketext = "Why did the math book cry? Because it had too many problems." };
         await client.PostAsJsonAsync("/joke/add", joke);
-    
+
         var response = await client.GetFromJsonAsync<ICollection<Joke>>("/joke/all");
         response.Count.Should().Be(1);
     }
@@ -293,23 +293,32 @@ public class DadaBaseTest : IClassFixture<WebApplicationFactory<Program>>, IAsyn
     public async Task GetJokeByIdTest()
     {
         var client = customWebAppFactory.CreateClient();
-        
+
         //Create a Joke to Test get by id
         Joke joke = new() { Jokename = "WhyDidTheMathBookCry", Joketext = "Why did the math book cry? Because it had too many problems." };
         await client.PostAsJsonAsync("/joke/add", joke);
-        
+
         var response = await client.GetFromJsonAsync<Joke>("/joke/1");
         response.Jokename.Should().Be("WhyDidTheMathBookCry");
         response.Id.Should().Be(1);
     }
-    //[Fact]
-    //public async Task 
-    //[Fact]
-    //public async Task GetAllAudience()
-    //{
-    //    var client = customWebAppFactory.CreateClient();
-    //    var
-    //    var response =
+    [Fact]
+    public async Task PostAudience()
+    {
+        var client = customWebAppFactory.CreateClient();
+        Audience audience = new Audience() { Audiencename = "vietnam", Description = "me audrey and mateo" };
+        (await client.PostAsJsonAsync("/audience/add", audience)).IsSuccessStatusCode.Should().BeTrue();
     }
+    [Fact]
+    public async Task GetAllAudience()
+    {
+        var client = customWebAppFactory.CreateClient();
+        Audience audience = new Audience() { Audiencename = "vietnam", Description = "me audrey and mateo" };
+        await client.PostAsJsonAsync("/audience/add", audience);
+        await client.PostAsJsonAsync("/audience/add", audience);
+        (await client.GetAsync("/audience/all")).IsSuccessStatusCode.Should().BeTrue();
+
+    }
+}
 
 
